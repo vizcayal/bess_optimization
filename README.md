@@ -17,21 +17,21 @@ the energy stored in Bess
 
 ## Decision Variables
 
-charge[t]: hour energy charged by the Bess at hour t.
-gen[t]: hour energy generated to the system by the Bess (discharged) at hour t.
-acc_charge: state of charge, cumulative charge of the Bess at the beginning of hour t.
-reg_up: regulation up of the Bess at hour t.
-reg_down: regulation down of the Bess at hour t.
+- charge[t]: hour energy charged by the Bess at hour t.
+- gen[t]: hour energy generated to the system by the Bess (discharged) at hour t.
+- acc_charge: state of charge, cumulative charge of the Bess at the beginning of hour t.
+- reg_up: regulation up of the Bess at hour t.
+- reg_down: regulation down of the Bess at hour t.
 
 
 ## Parameters
 
-energy price[t]: market price of energy for hour t (buy or sell price).
-reg_up_price[t]: market price of regulation up for hour t.
-reg_down_price[t]: market price of regulation.
-eff: efficiency of Bess.
-power_capacity: power capacity of the Bess.
-Energy_capacity: energy capacity of Bess.
+- energy price[t]: market price of energy for hour t (buy or sell price).
+- reg_up_price[t]: market price of regulation up for hour t.
+- reg_down_price[t]: market price of regulation.
+- eff: efficiency of Bess.
+- power_capacity: power capacity of the Bess.
+- energy_capacity: energy capacity of Bess.
 
 
 ## Objective Function
@@ -42,33 +42,40 @@ Max[ Sum( energy_price[i] * (gen[i] - charge[i]) + reg_up_price(i) * reg_up[i] +
 
 ## Constraints
 
-Regulation, generation, charging are all greater or equal to zero
+1. Regulation, generation, charging are all greater or equal to zero
+
 reg_up[t] >= 0
 reg_down[t] >= 0
 gen[t] >= 0
 charge[t] >= 0
 acc_charge >= 0
 
-Hour generation, charge, regulation up and down cannot exceed power capacity
+2. Hour generation, charge, regulation up and down cannot exceed power capacity
+
 gen[t] + reg_up[t] <= power_capacity	
 reg_up[t] <= power_capacity	
 reg_down[t] <= power_capacity	
 charge[t] <= power_capacity	
 
-Generation plus regulation up cannot surpass the power capacity
+3. Generation plus regulation up cannot surpass the power capacity
+
 gen[t] + reg_up[t] <= power_capacity	
 	
-Generation plus regulation up cannot surpass the charge of the bess
+4. Generation plus regulation up cannot surpass the charge of the bess
+
 gen[t] + reg_up[t] <= energy_capacity * 0.9	
 
-Charging rate plus regulation down cannot exceed the remaining capacity of charge
-	charge[t] + reg_down[t] <= energy_capacity - acc_charge[t]
+5. Charging rate plus regulation down cannot exceed the remaining capacity of charge
 
-Only one charging cycle by day.
+charge[t] + reg_down[t] <= energy_capacity - acc_charge[t]
+
+6. Only one charging cycle by day.
+
 Sum(gen[t]) <= energy_capacity, for t from 0 to 23 hour for each day
 Sum(charge[t]) <= energy_capacity, for t from 0 to 23 hour for each day
 
-State of charge of the Bess of the next hour is the State of charge of the current hour plus the energy charge from the system hour, minus the energy generated that hour plus the energy deployed by regulation, considering the effect of efficiency for every operation.
+7. State of charge of the Bess of the next hour is the State of charge of the current hour plus the energy charge from the system hour, minus the energy generated that hour plus the energy deployed by regulation, considering the effect of efficiency for every operation.
+
 acc_charge[t + 1] = acc_charge[t] + eff * charge[t] - (1/eff) * gen[t] + 0.1 * eff* reg_down[t] - 0.1 * (1/eff) * reg_up[t]  
 
 

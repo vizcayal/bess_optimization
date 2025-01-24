@@ -43,40 +43,33 @@ Max[ Sum( energy_price[i] * (gen[i] - charge[i]) + reg_up_price(i) * reg_up[i] +
 ## Constraints
 
 1. Regulation, generation, charging are all greater or equal to zero
-
-    reg_up[t] >= 0
-    reg_down[t] >= 0
-    gen[t] >= 0
-    charge[t] >= 0
-    acc_charge >= 0
+    - reg_up[t] >= 0
+    - reg_down[t] >= 0
+    - gen[t] >= 0
+    - charge[t] >= 0
+    - acc_charge >= 0
 
 2. Hour generation, charge, regulation up and down cannot exceed power capacity
-
-    gen[t] + reg_up[t] <= power_capacity	
-    reg_up[t] <= power_capacity	
-    reg_down[t] <= power_capacity	
-    charge[t] <= power_capacity	
+    - gen[t] + reg_up[t] <= power_capacity	
+    - reg_up[t] <= power_capacity	
+    - reg_down[t] <= power_capacity	
+    - charge[t] <= power_capacity	
 
 3. Generation plus regulation up cannot surpass the power capacity
-
-    gen[t] + reg_up[t] <= power_capacity	
+    - gen[t] + reg_up[t] <= power_capacity	
 	
 4. Generation plus regulation up cannot surpass the charge of the Bess
-
-    gen[t] + reg_up[t] <= energy_capacity * 0.9	
+    - gen[t] + reg_up[t] <= energy_capacity * 0.9	
 
 5. Charging rate plus regulation down cannot exceed the remaining capacity of charge
-
-    charge[t] + reg_down[t] <= energy_capacity - acc_charge[t]
+    - charge[t] + reg_down[t] <= energy_capacity - acc_charge[t]
 
 6. Only one charging cycle by day.
-
-    Sum(gen[t]) <= energy_capacity, for t from 0 to 23 hour for each day
-    Sum(charge[t]) <= energy_capacity, for t from 0 to 23 hour for each day
+    - Sum(gen[t]) <= energy_capacity, for t from 0 to 23 hour for each day
+    - Sum(charge[t]) <= energy_capacity, for t from 0 to 23 hour for each day
 
 7. State of charge of the Bess of the next hour is the State of charge of the current hour plus the energy charge from the system hour, minus the energy generated that hour plus the energy deployed by regulation, considering the effect of efficiency for every operation.
-
-    acc_charge[t + 1] = acc_charge[t] + eff * charge[t] - (1/eff) * gen[t] + 0.1 * eff* reg_down[t] - 0.1 * (1/eff) * reg_up[t]  
+    - acc_charge[t + 1] = acc_charge[t] + eff * charge[t] - (1/eff) * gen[t] + 0.1 * eff* reg_down[t] - 0.1 * (1/eff) * reg_up[t]  
 
 
 ## Approach

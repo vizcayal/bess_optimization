@@ -59,10 +59,10 @@ Max[ Sum( energy_price[i] * (gen[i] - charge[i]) + reg_up_price(i) * reg_up[i] +
     - gen[t] + reg_up[t] <= power_capacity	
 	
 4. Generation plus regulation up cannot surpass the charge of the Bess
-    - gen[t] + reg_up[t] <= energy_capacity * 0.9	
+    - gen[t] + reg_up[t] <= 0.9 * energy_capacity
 
 5. Charging rate plus regulation down cannot exceed the remaining capacity of charge
-    - charge[t] + reg_down[t] <= energy_capacity - acc_charge[t]
+    - charge[t] + reg_down[t] <= (1/0.9) * energy_capacity - acc_charge[t] 
 
 6. Only one charging cycle by day.
     - Sum(gen[t]) <= energy_capacity, for t from 0 to 23 hour for each day

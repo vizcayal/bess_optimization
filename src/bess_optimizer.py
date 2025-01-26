@@ -8,10 +8,9 @@ class Bess_Optimizer:
         self.case = case
         self.efficiency = efficiency
         self.energy_capacity = energy_capacity / self.efficiency
-        self.energy_prices = None
+        self.energy_price = None
         self.power_capacity = power_capacity
-        self.reg_up_prices = None
-        self.reg_down_prices = None
+        self.reg_prices = None
         self.total_profit = None
 
 
@@ -19,11 +18,11 @@ class Bess_Optimizer:
         '''
         load energy prices from energy_price_file
         ''' 
-        self.energy_prices = pd.read_csv(energy_price_file)
-        self.energy_prices['Operating Day'] = pd.to_datetime(self.energy_prices['Operating Day'])
-        self.energy_prices['Date'] = self.energy_prices['Operating Day'] + pd.to_timedelta(self.energy_prices['Operating Hour'] - 1, unit='h')
-        self.energy_prices['Date'] = pd.to_datetime(self.energy_prices['Date'])
-        self.energy_prices['Date'] = self.energy_prices['Date'].dt.strftime("%Y_%m_%d_%H")
+        self.energy_price = pd.read_csv(energy_price_file)
+        self.energy_price['Operating Day'] = pd.to_datetime(self.energy_price['Operating Day'])
+        self.energy_price['Date'] = self.energy_price['Operating Day'] + pd.to_timedelta(self.energy_price['Operating Hour'] - 1, unit='h')
+        self.energy_price['Date'] = pd.to_datetime(self.energy_price['Date'])
+        self.energy_price['Date'] = self.energy_price['Date'].dt.strftime("%Y_%m_%d_%H")
         
 
     def load_regulation(self, regulation_price_file):
@@ -46,8 +45,8 @@ class Bess_Optimizer:
         
         start_day = pd.to_datetime(start_day)
         end_day = pd.to_datetime(end_day)
-        period = self.energy_prices[(self.energy_prices['Operating Day'] >= start_day) & (self.energy_prices['Operating Day'] <= end_day)]['Date'].tolist()
-        days_list = list(self.energy_prices[(self.energy_prices['Operating Day'] >= start_day) & (self.energy_prices['Operating Day'] <= end_day)]['Operating Day'].unique())
+        period = self.energy_price[(self.energy_price['Operating Day'] >= start_day) & (self.energy_price['Operating Day'] <= end_day)]['Date'].tolist()
+        days_list = list(self.energy_price[(self.energy_price['Operating Day'] >= start_day) & (self.energy_price['Operating Day'] <= end_day)]['Operating Day'].unique())
         days_list = [day.strftime("%Y_%m_%d") for day in days_list]
         
         #Decision Variables
@@ -112,12 +111,12 @@ class Bess_Optimizer:
 
         # objective function
         self.optimizer += lpSum(
-                                self.energy_prices[self.energy_prices['Date']==hour]['Price'].iloc[0] * self.gen_hour[hour] -
-                                self.energy_prices[self.energy_prices['Date']==hour]['Price'].iloc[0] * self.charge_hour[hour] +
+                                self.energy_price[self.energy_price['Date']==hour]['Price'].iloc[0] * self.gen_hour[hour] -
+                                self.energy_price[self.energy_price['Date']==hour]['Price'].iloc[0] * self.charge_hour[hour] +
                                 self.reg_prices[self.reg_prices['Date']==hour]['Regulation Up'].iloc[0] * self.reg_up[hour] +
-                                self.energy_prices[self.energy_prices['Date']==hour]['Price'].iloc[0] * self.reg_up[hour] * 0.1 +
+                                self.energy_price[self.energy_price['Date']==hour]['Price'].iloc[0] * self.reg_up[hour] * 0.1 +
                                 self.reg_prices[self.reg_prices['Date']==hour]['Regulation Down'].iloc[0] * self.reg_down[hour] +
-                                self.energy_prices[self.energy_prices['Date']==hour]['Price'].iloc[0] * self.reg_down[hour] * 0.1 
+                                self.energy_price[self.energy_price['Date']==hour]['Price'].iloc[0] * self.reg_down[hour] * 0.1 
                                 for hour in period
                                 )
         

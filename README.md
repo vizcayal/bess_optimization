@@ -76,4 +76,24 @@ Max[ Sum( energy_price[i] * (gen[i] - charge[i]) + reg_up_price(i) * reg_up[i] +
 The optimization is set up as Linear Programming (LP) problem, solved by using Pulp library
 
 
-## How to use the optimizer
+## How to install bess optimizer
+
+1. Unzip the bess_optimizer.zip file
+2. In the root folder install the virtual env 'pip install -r requirements.txt'
+3. Activate the virtual env by executing 'bess_env/scripts/activate'
+
+## How to execute
+
+1. Execute 'python optimizer.py' for default parameters optimization
+2. The following optional parameters can be included:
+    case: name of the case to be run
+    power_capacity: power capacity of the bess to be optimized
+    energy_capacity: energy capacity of charge of the bess
+    start_date / end_date: start date for the optimization (MM/DD/YYYY)
+    
+    e.g 'python optimizer.py --case test1 --power_capacity 50 --energy_capacity 150 --start_date 03/01/2023 --end_date 04/01/2023'
+    
+## How to test
+
+1. For performing tests in the tests folder, execute the command: 'python -m pytest'
+

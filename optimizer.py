@@ -1,5 +1,6 @@
 from src.bess import Bess
 from src.bess_optimizer import Bess_Optimizer
+from src.visualizer import Visualizer
 import argparse
 
 def main():
@@ -35,6 +36,9 @@ def main():
     bess_texas.set_profit(optimizer.get_profit())
     # print the total profit and number of cycles
     bess_texas.print_report()
+
+    visualizer = Visualizer(args.case)
+    visualizer.plot()
 
 
 if __name__ == "__main__":

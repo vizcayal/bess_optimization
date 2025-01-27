@@ -82,6 +82,31 @@ The optimization is set up as Linear Programming (LP) problem, solved by using P
 2. In the root folder install the virtual env 'pip install -r requirements.txt'
 3. Activate the virtual env by executing 'bess_env/scripts/activate'
 
+
+## Structure of the project
+
+root/
+├── src/                                    # source folder
+│   ├── __init__.py                         
+│   ├── bess.py                             # bess class
+│   ├── bess_optimizer.py                   # bess optimizer class
+│   └── visualizer.py                       # visualizer class
+├── tests/
+│   ├── __init__.py     
+│   ├── test_bess.py                        # tests for bess class
+│   ├── test_bess_optimizer.py              # tests for bess_optimizer class
+│   └── ...
+├── data/
+│   ├── energy_prices.csv                   # hourly energy prices file
+│   └── regulation_prices.csv               # hourly regulation prices file
+├── utils/
+│   └── utils.py                            # utils functions
+├── output/
+│   └── results-case_0.csv                  # example results for the default case
+├── optimizer.py                            # main file
+├── requirements.txt                        # required libraries for the virtual environment
+└── README.md           
+
 ## How to execute
 
 1. Execute 'python optimizer.py' for default parameters optimization
@@ -92,7 +117,19 @@ The optimization is set up as Linear Programming (LP) problem, solved by using P
     start_date / end_date: start date for the optimization (MM/DD/YYYY)
     
     e.g 'python optimizer.py --case test1 --power_capacity 50 --energy_capacity 150 --start_date 03/01/2023 --end_date 04/01/2023'
-    
+
+## Output
+
+1. Files in the output folder have the hourly optimization results for Bess Generation, Charge, regulation up/downs and state 
+of charge.
+3. After running the main script optimizer.py, the with information about the Total profit and total cycles will be printed
+in the screen
+
+e.g
+SUMMARY SCHEDULE OPERATION:
+Total Profit: 1271703.2
+Total Cycles: 25.1
+
 ## How to test
 
 1. For performing tests in the tests folder, execute the command: 'python -m pytest'

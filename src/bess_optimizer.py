@@ -184,20 +184,16 @@ class Bess_Optimizer:
                     schedule_dict[var][day_hour] = round(v.varValue,2)
         self.schedule_ds = pd.DataFrame.from_dict(schedule_dict)
     
-    def get_optimal_schdule(self) -> pd.DataFrame:
+
+    def get_optimal_schedule(self) -> pd.DataFrame:
         """
         return the hourly optimal schedule for the Bess 
         """
         return self.schedule_ds
-    
+
     
     def save_hourly_report(self):
         '''
         save a csv hourly report into the output folder
         '''
         self.schedule_ds.to_csv(f'output/results-{self.case}.csv')
-        
-    
-    def print_report(self):
-        print(f'Total cycles: {self.total_profit}')
-        print(f'Total : {self.total_profit}')

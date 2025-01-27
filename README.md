@@ -1,6 +1,6 @@
 # Battery Energy Storage System (BESS) Schedule Optimization
 
-## Schedule Optimizer that determines the hourly amount to charge and discharge
+## Schedule Optimizer that determines the hourly amount to charge and discharge amounts
 ## for a BESS in an electricity Market for maximizing profits.
 
 
@@ -73,10 +73,10 @@ Max[ Sum( energy_price[i] * (gen[i] - charge[i]) + reg_up_price(i) * reg_up[i] +
 
 
 ## Approach
-The optimization is set up as Linear Programming (LP) problem, solved by using Pulp library
+The optimization is set up as Linear Programming (LP) problem, solved using the Pulp library
 
 
-## How to install bess optimizer
+## Installation Instructions
 
 1. Unzip the bess_optimizer.zip file
 2. In the root folder install the virtual env 'pip install -r requirements.txt'
@@ -102,7 +102,10 @@ root/
 ├── utils/
 │   └── utils.py                            # utils functions
 ├── output/
-│   └── results-case_0.csv                  # example results for the default case
+│   ├── hourly_gen-case_0.pdf               # hourly energy prices file
+│   ├── hourly_charge-case_0.pdf            # hourly energy prices file
+│   ├── results_case-0.csv                  # hourly energy prices file
+│   └── hourly_charge-case_0csv             # example results for the default case
 ├── optimizer.py                            # main file
 ├── requirements.txt                        # required libraries for the virtual environment
 └── README.md           
@@ -111,10 +114,10 @@ root/
 
 1. Execute 'python optimizer.py' for default parameters optimization
 2. The following optional parameters can be included:
-    case: name of the case to be run
-    power_capacity: power capacity of the bess to be optimized
-    energy_capacity: energy capacity of charge of the bess
-    start_date / end_date: start date for the optimization (MM/DD/YYYY)
+    --case: name of the case to be run
+    --power_capacity: power capacity of the Bess.
+    --energy_capacity: energy capacity of the Bess.
+    --start_date / --end_date: start and end dates for the optimization (MM/DD/YYYY).
     
     e.g 'python optimizer.py --case test1 --power_capacity 50 --energy_capacity 150 --start_date 03/01/2023 --end_date 04/01/2023'
 

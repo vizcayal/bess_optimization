@@ -3,6 +3,8 @@ from datetime import datetime
 from pulp import LpProblem, LpMaximize, LpVariable, lpSum, PULP_CBC_CMD
 from src.bess import Bess
 from utils.utils import date_to_timezone
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
 
 class Bess_Optimizer:
         
@@ -160,9 +162,8 @@ class Bess_Optimizer:
                                                                  - 0.1 * self.reg_up[past_hour] * (1/bess_efficiency) 
                                     )
 
-                
         self.optimizer.solve(PULP_CBC_CMD(msg=False))
-        self.total_profit = self.optimizer.objective.value()
+        self.total_profit = round(self.optimizer.objective.value() , 1)
         self.process_optimal_schedule()
         
 
@@ -190,10 +191,15 @@ class Bess_Optimizer:
         return the hourly optimal schedule for the Bess 
         """
         return self.schedule_ds
-
     
     def save_hourly_report(self):
         '''
         save a csv hourly report into the output folder
         '''
         self.schedule_ds.to_csv(f'output/results-{self.case}.csv')
+
+    def get_profit(self) -> float:
+        """
+        return the total profit for the optimal operation
+        """
+        return self.total_profit

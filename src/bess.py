@@ -47,14 +47,20 @@ class Bess:
         Parameters:
         schedule : Optimal Schedule to assign to the BESS.
         """
-        self.schedule = schedule
+        self.schedule_ds = schedule
+    
+    def set_profit(self, profit):
+        """
+        set the total profit of the operation in Bess 
+        """
+        self.total_profit = profit
 
-    def calc_total_cycles(self, energy_capacity:float) -> float:
+    def calc_total_cycles(self) -> float:
         """
         calculate the total cycles of the optimal schedule
         """
         total_charge = self.schedule_ds['charge_hour'].sum()
-        self.cycles = total_charge / energy_capacity
+        self.cycles = round(total_charge / self.energy_capacity,1)
         return self.cycles
     
     def print_report(self):
@@ -63,8 +69,8 @@ class Bess:
         """
         self.calc_total_cycles()
         print('SUMMARY SCHEDULE OPERATION:')
-        print(f'Total Cycles: {self.total_profit}')
-        print(f'Total Profit: {self.cycles}')
+        print(f'Total Profit: {self.total_profit}')
+        print(f'Total Cycles: {self.cycles}')
     
 
     

@@ -102,10 +102,10 @@ root/
 ├── utils/
 │   └── utils.py                            # utils functions
 ├── output/
-│   ├── hourly_gen-case_0.pdf               # hourly energy prices file
-│   ├── hourly_charge-case_0.pdf            # hourly energy prices file
-│   ├── results_case-0.csv                  # hourly energy prices file
-│   └── hourly_charge-case_0csv             # example results for the default case
+│   ├── gen-case_0.pdf                      # pdf report with graph of hourly generation for the Bess for the default case.
+│   ├── charge-case_0.pdf                   # pdf report with graph of hourly charge for the Bess for the default case.
+│   ├── results_case-0.csv                  # csv report with hourly generation, charge, regulation and state of charge for the default case.
+│   └── state_of_charge-case_0.pf           # pdf report with graph of hourly state of charge for the Bess for the default case.
 ├── optimizer.py                            # main file
 ├── requirements.txt                        # required libraries for the virtual environment
 └── README.md           

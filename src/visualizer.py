@@ -26,7 +26,7 @@ class Visualizer:
         plt.grid(True, linestyle='--', alpha=0.6)
         plt.xticks(rotation=45)
         plt.tight_layout()
-        plt.savefig(f'output/hourly_gen-{self.case}.pdf')
+        plt.savefig(f'output/gen-{self.case}.pdf')
         plt.show()
 
         # Plot charge_hour
@@ -38,7 +38,7 @@ class Visualizer:
         plt.grid(True, linestyle='--', alpha=0.6)
         plt.xticks(rotation=45)
         plt.tight_layout()
-        plt.savefig(f'output/hourly_charge-{self.case}.pdf')
+        plt.savefig(f'output/charge-{self.case}.pdf')
         plt.show()
 
         # Plot state_of_charge

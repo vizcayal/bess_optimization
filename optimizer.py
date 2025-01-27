@@ -14,8 +14,8 @@ def main():
     parser.add_argument("--case", type=str, required=False, help="name of the case", default= "case_0")
     parser.add_argument("--power_capacity", type = float, required = False, help="Bess power capacity", default= 100)
     parser.add_argument("--energy_capacity", type = float, required = False, help="Bess power capacity", default= 200)
-    parser.add_argument("--start_date", type = str, required = False, help="optimization start date", default ='01-01-2023')
-    parser.add_argument("--end_date", type = str, required = False, help="Optimization end date", default ='02-01-2023')
+    parser.add_argument("--start_date", type = str, required = False, help="optimization start date", default ='03-01-2023')
+    parser.add_argument("--end_date", type = str, required = False, help="Optimization end date", default ='04-01-2023')
     args = parser.parse_args()
 
     # create a Bess instance
